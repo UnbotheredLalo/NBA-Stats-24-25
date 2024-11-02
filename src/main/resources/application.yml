@@ -5,4 +5,4 @@ spring:
     password: BlackAdam7
 server:
   servlet:
-    context-path: /player-service
+    context-path: /nba-stats/api

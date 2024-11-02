@@ -6,20 +6,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
 @Data
 @AllArgsConstructor
-
 public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private static long idCounter = 1;
-    private long teamID;
+    private long id;
     private final String franchiseName;
     private final String city;
     private String streak;
@@ -41,7 +37,7 @@ public class Team {
     private int roadLs;
 
     public Team(String city, String franchiseName, int championships, int conferenceChamps) {
-        this.teamID = generateID();
+        this.id = generateID();
         this.city = city;
         this.franchiseName = franchiseName;
         this.championships = championships;

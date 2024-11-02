@@ -1,22 +1,22 @@
 package entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-
-import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
 @Data
 @AllArgsConstructor
-
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private static long idCounter = 1;
-    private long playerID;
+    private long id;
     private final String name;
     private final String country;
     private final int numberOfPick;
@@ -36,7 +36,7 @@ public class Player {
     private Team team;
 
     public Player(String name, int number, String country, Team team, int numberOfPick, int numberOfSeasons) {
-        this.playerID = generateID();
+        this.id = generateID();
         this.name = name;
         this.number = number;
         this.country = country;

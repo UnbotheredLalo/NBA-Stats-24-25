@@ -3,16 +3,25 @@ package controller;
 import entity.Player;
 import entity.Team;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.text.Normalizer;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
+import static utils.StringUtils.normalize;
 
 @RestController
-@RequestMapping("/player-service")
+@RequestMapping("/player")
 public class PlayerController {
 
     private final List<Player> players = new ArrayList<>();
@@ -99,48 +108,48 @@ public class PlayerController {
         );
     }
 
-    /**
-     * This method normalizes the user's input in case the String 'name' entered
-     * does not exactly match the diacritics contained in the attribute of the 'Player' object and lowercase it
-     * at the sametime
-     * @param input (E.g. "luka doncic")
-     * @return "Luka Dončić"
-     */
-    public static String normalize(String input) {
-        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(normalized).replaceAll("").toLowerCase();
-    }
+    @GetMapping("/player/{id}")
+    public ResponseEntity<Player> getPlayerByPick(@RequestParam long id) {
 
-    @GetMapping("/player")
-    public Player getPlayerByPick(@RequestParam int numberOfPick) {
-        return players.stream()
-                .filter(player -> player.getNumberOfPick() == numberOfPick)
-                .findFirst()
-                .orElse(null);
+        Player player = players.stream()
+                 .filter(p -> p.getId() == id)
+                 .findFirst()
+                 .orElse(null);
+
+        if (player != null) {
+            return ResponseEntity.ok(player);
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/players")
-    public List<Player> getAllPlayers() {
-        return players;
+    public ResponseEntity<List<Player>> getAllPlayers() {
+        if (players.isEmpty()) {
+            return ResponseEntity.notFound().build();
+
+        }
+        return ResponseEntity.ok(players);
     }
 
-    @PostMapping("/players")
-    public Player addPlayer(@RequestBody Player newPlayer) {
+    @PostMapping("/create")
+    public ResponseEntity<Player> addPlayer(@RequestBody Player newPlayer) {
+        newPlayer.setId(players.size() + 1);
         players.add(newPlayer);
-        return newPlayer;
+
+        return ResponseEntity.created( URI.create("/player/" + newPlayer.getId()))
+                .body(newPlayer);
     }
 
-    @PutMapping("/player/{name}/team/{franchiseName}")
+    @PutMapping("/player/team")
     public ResponseEntity<Player> updatePlayerTeam(
-            @PathVariable String name,
+            @PathVariable long id,
             @PathVariable String franchiseName,
             @RequestBody Player updatedPlayer) {
 
-        String normalizedName = normalize(name);
-
         Player player = players.stream()
-                .filter(p -> normalize(p.getName()).equals(normalizedName))
+                .filter(p -> p.getId() == id)
                 .findFirst()
                 .orElse(null);
 
@@ -158,16 +167,14 @@ public class PlayerController {
         return ResponseEntity.ok(player);
     }
 
-    @PatchMapping("/player/{name}")
+    @PatchMapping("/player")
     public ResponseEntity<Player> updatePlayerProperties(
-            @PathVariable String name,
+            @PathVariable long id,
             @RequestParam(required = false) Integer number,
             @RequestParam(required = false) Integer seasons) {
 
-        String normalizedName = normalize(name);
-
         Player player = players.stream()
-                .filter(p -> normalize(p.getName()).equals(normalizedName))
+                .filter(p -> p.getId() == id)
                 .findFirst()
                 .orElse(null);
 
@@ -178,6 +185,7 @@ public class PlayerController {
         if (number != null) {
             player.setNumber(number);
         }
+
         if (seasons != null) {
             player.setNumberOfSeasons(seasons);
         }
@@ -185,13 +193,11 @@ public class PlayerController {
         return ResponseEntity.ok(player);
     }
 
-    @DeleteMapping("/player/{name}")
-    public ResponseEntity<Void> deletePlayer(@PathVariable String name) {
-
-        String normalizedName = normalize(name);
+    @DeleteMapping("/player/{id}")
+    public ResponseEntity<Void> deletePlayer(@PathVariable long id) {
 
         Player player = players.stream()
-                .filter(p -> normalize(p.getName()).equals(normalizedName))
+                .filter(p -> p.getId() == id)
                 .findFirst()
                 .orElse(null);
 
@@ -200,7 +206,8 @@ public class PlayerController {
         }
 
         players.remove(player);
-        return ResponseEntity.noContent().header("Deleted", "Jugador eliminado exitosamente.").build();
+        return ResponseEntity.ok().header("Deleted",
+                "Jugador eliminado exitosamente.").build();
     }
 
 }
