@@ -1,13 +1,11 @@
-package domain;
-
-import entity.TeamEntity;
+package com.laloball.nbastats.api.domain;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
 public class ConferenceStandingsDomain {
-    private Map<String, TreeSet<TeamEntity>> conferenceMap;
+    private Map<String, TreeSet<Team>> conferenceMap;
 
     public ConferenceStandingsDomain() {
         conferenceMap = new HashMap<>();
@@ -21,7 +19,7 @@ public class ConferenceStandingsDomain {
      * @param conference
      * @param team
      */
-    public void addTeamToConference(String conference, TeamEntity team) {
+    public void addTeamToConference(String conference, Team team) {
         conferenceMap
                 .computeIfAbsent(conference, k -> new TreeSet<>(LeagueStandingsDomain.byConferenceWins()))
                 .add(team);
@@ -29,9 +27,9 @@ public class ConferenceStandingsDomain {
 
     public void displayConference(String conference) {
         System.out.println(conference + "conference");
-        TreeSet<TeamEntity> teamsInConference = conferenceMap.get(conference);
+        TreeSet<Team> teamsInConference = conferenceMap.get(conference);
         if (teamsInConference != null) {
-            for (TeamEntity team : teamsInConference) {
+            for (Team team : teamsInConference) {
                 System.out.println(team);
             }
         } else {

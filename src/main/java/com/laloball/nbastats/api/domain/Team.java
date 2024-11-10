@@ -1,19 +1,12 @@
-package entity;
+package com.laloball.nbastats.api.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity
 @Data
 @AllArgsConstructor
-public class TeamEntity {
+public class Team {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private static long idCounter = 1;
     private long id;
     private final String franchiseName;
@@ -38,7 +31,7 @@ public class TeamEntity {
     private int roadWs;
     private int roadLs;
 
-    public TeamEntity(String city, String franchiseName, String conference, String division,
+    public Team(String city, String franchiseName, String conference, String division,
                       int championships, int conferenceChamps) {
         this.id = generateID();
         this.city = city;
@@ -47,6 +40,16 @@ public class TeamEntity {
         this.division = division;
         this.championships = championships;
         this.conferenceChamps = conferenceChamps;
+    }
+
+    public Team(String city, String franchiseName, String conference, String division) {
+        this.id = generateID();
+        this.city = city;
+        this.franchiseName = franchiseName;
+        this.conference = conference;
+        this.division = division;
+        this.championships = 0;
+        this.conferenceChamps = 0;
     }
 
     private static long generateID() {
@@ -62,5 +65,26 @@ public class TeamEntity {
                 "Championships: " + championships + "\n" +
                 "Conference Championships: " + conferenceChamps;
 
+    }
+
+    public String leagueRecord(Team team) {
+        if (team == null) {
+            return "League record not available";
+        }
+        return team.getWins() + "-" + team.getLoses();
+    }
+
+    public String conferenceRecord(Team team) {
+        if (team == null) {
+            return "League record not available";
+        }
+        return team.getConferenceWs() + "-" + team.getConferenceLs();
+    }
+
+    public String divisionRecord(Team team) {
+        if (team == null) {
+            return "League record not available";
+        }
+        return team.getDivisionWs() + "-" + team.getDivisionLs();
     }
 }

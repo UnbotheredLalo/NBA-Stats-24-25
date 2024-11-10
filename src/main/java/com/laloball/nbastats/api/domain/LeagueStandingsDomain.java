@@ -1,14 +1,13 @@
-package domain;
+package com.laloball.nbastats.api.domain;
 
-import entity.TeamEntity;
 import java.util.Comparator;
 import java.util.TreeSet;
 
 public class LeagueStandingsDomain {
 
-    private TreeSet<TeamEntity> leagueStandings;
-    private TreeSet<TeamEntity> conferenceStandings;
-    private TreeSet<TeamEntity> divisionStandings;
+    private TreeSet<Team> leagueStandings;
+    private TreeSet<Team> conferenceStandings;
+    private TreeSet<Team> divisionStandings;
 
     public LeagueStandingsDomain() {
         this.leagueStandings = new TreeSet<>(byLeagueWins());
@@ -16,7 +15,7 @@ public class LeagueStandingsDomain {
         this.divisionStandings = new TreeSet<>(byDivisionWins());
     }
 
-    public void addTeam(TeamEntity team) {
+    public void addTeam(Team team) {
         leagueStandings.add(team);
         conferenceStandings.add(team);
         divisionStandings.add(team);
@@ -24,35 +23,35 @@ public class LeagueStandingsDomain {
 
     public void displayLeagueStandings() {
         System.out.println("League Standings:");
-        for (TeamEntity team : leagueStandings) {
+        for (Team team : leagueStandings) {
             System.out.println(team);
         }
     }
 
     public void displayConferenceStandings() {
         System.out.println("Conference Standings:");
-        for (TeamEntity team : conferenceStandings) {
+        for (Team team : conferenceStandings) {
             System.out.println(team);
         }
     }
 
     public void displayDivisionStandings() {
         System.out.println("Division Standings:");
-        for (TeamEntity team : divisionStandings) {
+        for (Team team : divisionStandings) {
             System.out.println(team);
         }
     }
 
     //Comparators
-    public static Comparator<TeamEntity> byLeagueWins() {
-        return Comparator.comparingInt(TeamEntity::getWins).reversed();
+    public static Comparator<Team> byLeagueWins() {
+        return Comparator.comparingInt(Team::getWins).reversed();
     }
 
-    public static Comparator<TeamEntity> byConferenceWins() {
-        return Comparator.comparingInt(TeamEntity::getConferenceWs).reversed();
+    public static Comparator<Team> byConferenceWins() {
+        return Comparator.comparingInt(Team::getConferenceWs).reversed();
     }
 
-    public static Comparator<TeamEntity> byDivisionWins() {
-        return Comparator.comparingInt(TeamEntity::getDivisionWs).reversed();
+    public static Comparator<Team> byDivisionWins() {
+        return Comparator.comparingInt(Team::getDivisionWs).reversed();
     }
 }
