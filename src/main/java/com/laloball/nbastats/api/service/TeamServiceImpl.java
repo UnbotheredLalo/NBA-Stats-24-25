@@ -6,6 +6,7 @@ import com.laloball.nbastats.api.domain.Team;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -43,6 +44,14 @@ public class TeamServiceImpl {
     Team teamTimberwolves = new Team("Minnesota", "Timberwolves", "Western", "Northwest", 0, 0);
     Team teamGrizzlies = new Team("Memphis", "Grizzlies", "Western", "Southwest", 0, 0);
     Team teamPelicans = new Team("New Orleans", "Pelicans", "Western", "Southwest", 0, 0);
+
+    public TeamServiceImpl() {
+        Collections.addAll(teamsDB, teamCeltics, teamLakers, teamWarriors, teamBulls, teamSpurs,
+                team76ers, teamPistons, teamHeat, teamKnicks, teamRockets, teamBucks, teamCavaliers,
+                teamHawks, teamThunder, teamWizards, teamTrailBlazers, teamMavericks, teamRaptors,
+                teamKings, teamNuggets, teamSuns, teamJazz, teamMagic, teamNets, teamPacers, teamHornets,
+                teamClippers, teamTimberwolves, teamGrizzlies, teamPelicans);
+    }
 
     public Team getTeamByFranchiseName(String franchiseName) {
         for (Team team : teamsDB) {

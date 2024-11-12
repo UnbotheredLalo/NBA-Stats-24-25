@@ -1,15 +1,17 @@
-package com.laloball.nbastats.api.domain;
+package com.laloball.nbastats.api.standings;
+
+import com.laloball.nbastats.api.domain.Team;
 
 import java.util.Comparator;
 import java.util.TreeSet;
 
-public class LeagueStandingsDomain {
+public class League {
 
     private TreeSet<Team> leagueStandings;
     private TreeSet<Team> conferenceStandings;
     private TreeSet<Team> divisionStandings;
 
-    public LeagueStandingsDomain() {
+    public League() {
         this.leagueStandings = new TreeSet<>(byLeagueWins());
         this.conferenceStandings = new TreeSet<>(byConferenceWins());
         this.divisionStandings = new TreeSet<>(byDivisionWins());

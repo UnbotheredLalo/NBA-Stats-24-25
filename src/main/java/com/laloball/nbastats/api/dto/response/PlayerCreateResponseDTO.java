@@ -1,6 +1,6 @@
 package com.laloball.nbastats.api.dto.response;
 
-public record PlayerResponseDTO(
+public record PlayerCreateResponseDTO(
         String name,
         String country,
         int number,

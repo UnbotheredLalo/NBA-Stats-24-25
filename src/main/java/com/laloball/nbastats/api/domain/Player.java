@@ -48,7 +48,6 @@ public class Player {
         this.number = number;
         this.country = country;
         this.position = position;
-        this.team = team;
         this.numberOfPick = numberOfPick;
         this.numberOfSeasons = 1;
     }

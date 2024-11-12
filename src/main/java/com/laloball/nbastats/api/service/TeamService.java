@@ -1,7 +1,5 @@
 package com.laloball.nbastats.api.service;
 
-import com.laloball.nbastats.api.dto.request.TeamRequestDTO;
-import com.laloball.nbastats.api.dto.response.TeamResponseDTO;
 import com.laloball.nbastats.api.domain.Team;
 
 public interface TeamService {
@@ -10,6 +8,6 @@ public interface TeamService {
 
     Team getTeamByFranchiseName(String franchiseName);
 
-    TeamResponseDTO updateTeam(Long id, TeamRequestDTO teamRequestDTO);
+    Team updateTeam(Long id, Team team);
 
 }

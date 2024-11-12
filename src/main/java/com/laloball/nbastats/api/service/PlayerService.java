@@ -1,19 +1,22 @@
 package com.laloball.nbastats.api.service;
 
-import com.laloball.nbastats.api.dto.request.PlayerRequestDTO;
-import com.laloball.nbastats.api.dto.response.PlayerResponseDTO;
 import com.laloball.nbastats.api.domain.Player;
+import com.laloball.nbastats.api.dto.response.AllPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.GetPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.PlayerCreateResponseDTO;
 
 import java.util.List;
 
 
 public interface PlayerService {
 
-    Player createPlayer(PlayerRequestDTO newPlayerRequestDTO);
+    PlayerCreateResponseDTO createPlayer(Player player);
 
-    PlayerResponseDTO getPlayerById(long id);
+    void addPlayer(Player player);
 
-    List<PlayerResponseDTO> getAllPlayers();
+    GetPlayerResponseDTO getPlayerById(long id);
+
+    List<AllPlayerResponseDTO> getAllPlayers();
 
     List<Player> getAll();
 

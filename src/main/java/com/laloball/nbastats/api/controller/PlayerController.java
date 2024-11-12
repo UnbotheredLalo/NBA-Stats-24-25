@@ -2,13 +2,21 @@ package com.laloball.nbastats.api.controller;
 
 import com.laloball.nbastats.api.domain.Player;
 import com.laloball.nbastats.api.dto.request.PlayerRequestDTO;
-import com.laloball.nbastats.api.dto.response.PlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.AllPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.GetPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.PlayerCreateResponseDTO;
 import com.laloball.nbastats.api.mapper.PlayerMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import com.laloball.nbastats.api.service.PlayerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -22,8 +30,8 @@ public class PlayerController {
     private final PlayerService playerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlayerResponseDTO> getPlayerByID(@PathVariable long id) {
-        PlayerResponseDTO playerResponseDTO = playerService.getPlayerById(id);
+    public ResponseEntity<GetPlayerResponseDTO> getPlayerById(@PathVariable long id) {
+        GetPlayerResponseDTO playerResponseDTO = playerService.getPlayerById(id);
         if (playerResponseDTO != null) {
             return ResponseEntity.ok(playerResponseDTO);
 
@@ -33,17 +41,17 @@ public class PlayerController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PlayerResponseDTO>> getAllPlayers() {
-        List<PlayerResponseDTO> playersResponseDTO = playerService.getAllPlayers();
+    public ResponseEntity<List<AllPlayerResponseDTO>> getAllPlayers() {
+        List<AllPlayerResponseDTO> playersResponseDTO = playerService.getAllPlayers();
         return ResponseEntity.ok(playersResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<PlayerResponseDTO> createNewPlayer(@RequestBody PlayerRequestDTO playerRequestDTO) {
+    public ResponseEntity<PlayerCreateResponseDTO> createNewPlayer(@RequestBody PlayerRequestDTO playerRequestDTO) {
         Player playerDomain = PlayerMapper.INSTANCE.toDomain(playerRequestDTO);
         //todo: Agregar aquí un metodo create que valide el input del usuario
         // previo a la creación y que arroje excepciones
-        PlayerResponseDTO newPlayerResponseDTO = PlayerMapper.INSTANCE.toResponseDTO(playerDomain);
+        PlayerCreateResponseDTO newPlayerResponseDTO = PlayerMapper.INSTANCE.toCreateResponseDTO(playerDomain);
         return ResponseEntity.status(CREATED).body(newPlayerResponseDTO);
     }
 

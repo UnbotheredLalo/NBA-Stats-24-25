@@ -1,20 +1,21 @@
 package com.laloball.nbastats.api.service;
 
 import com.laloball.nbastats.api.dto.request.PlayerRequestDTO;
-import com.laloball.nbastats.api.dto.response.PlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.AllPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.GetPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.PlayerCreateResponseDTO;
 import com.laloball.nbastats.api.domain.Team;
 import com.laloball.nbastats.api.domain.Player;
 import com.laloball.nbastats.api.mapper.PlayerMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class PlayerServiceImpl implements PlayerService{
-
-    private PlayerMapper playerMapper;
 
     private Team teamCeltics;
     private Team teamKnicks;
@@ -80,21 +81,34 @@ public class PlayerServiceImpl implements PlayerService{
     Player jaG12 = new Player("Ja Morant", 12, "USA", "Point Guard", teamGrizzlies, 2, 5);
     Player ingram = new Player("Brandon Ingram", 14, "USA", "Small Forward", teamPelicans, 2, 8);
 
+    public PlayerServiceImpl() {
+        Collections.addAll(playersDB, tacoJay, leBron, theChef, flight8, wemby, joJo, motorCade,
+                jimBucket, jayBrunson, alpySen, greekFreak, spida, swissBank, sGA, bigScience,
+                deAndre, lukaMagic, rjBarrett, domantas, joker, dBook, lauriBird, banchero,
+                schroder, haliburton, laMelo, theSystem, antMan, jaG12, ingram);
+    }
+
+    public void addPlayer(Player player) {
+        playersDB.add(player);
+    }
+
     @Override
-    public PlayerResponseDTO getPlayerById(long id) {
+    public GetPlayerResponseDTO getPlayerById(long id) {
         return playersDB.stream()
                 .filter(player -> player.getId() == id)
-                .map(PlayerMapper.INSTANCE::toResponseDTO)
+                .map(PlayerMapper.INSTANCE::toGetResponseDTO)
                 .findFirst()
                 .orElse(null);
     }
+
     @Override
     public List<Player> getAll() {
-        return List.of();
+        return playersDB;
     }
-    public List<PlayerResponseDTO> getAllPlayers() {
+
+    public List<AllPlayerResponseDTO> getAllPlayers() {
         return playersDB.stream()
-                .map(PlayerMapper.INSTANCE::toResponseDTO)
+                .map(PlayerMapper.INSTANCE::toAllResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -107,6 +121,8 @@ public class PlayerServiceImpl implements PlayerService{
                 playerRequestDTO.country(),
                 playerRequestDTO.position(),
                 playerRequestDTO.numberOfPick());
+
+        playersDB.add(playerRequestDTO);
     }
 
 }

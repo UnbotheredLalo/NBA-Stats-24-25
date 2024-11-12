@@ -1,8 +1,7 @@
 package com.laloball.nbastats.api.dto.request;
 
 
-public record TeamRequestDTO( long id,
-                              String city,
+public record TeamRequestDTO( String city,
                               String franchiseName,
                               String conference,
                               String division) {

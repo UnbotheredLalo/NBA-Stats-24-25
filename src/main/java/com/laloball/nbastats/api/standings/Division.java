@@ -1,13 +1,15 @@
-package com.laloball.nbastats.api.domain;
+package com.laloball.nbastats.api.standings;
+
+import com.laloball.nbastats.api.domain.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class DivisionStandingsDomain {
+public class Division {
     private Map<String, TreeSet<Team>> divisionMap;
 
-    public DivisionStandingsDomain() {
+    public Division() {
         divisionMap = new HashMap<>();
     }
 

@@ -3,7 +3,9 @@ package com.laloball.nbastats.api.mapper;
 
 import com.laloball.nbastats.api.domain.Player;
 import com.laloball.nbastats.api.dto.request.PlayerRequestDTO;
-import com.laloball.nbastats.api.dto.response.PlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.AllPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.GetPlayerResponseDTO;
+import com.laloball.nbastats.api.dto.response.PlayerCreateResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,8 +20,12 @@ public interface PlayerMapper {
     @Mapping(target = "id", ignore = true)
     Player toDomain(PlayerRequestDTO playerRequestDTO);
 
-    PlayerResponseDTO toResponseDTO(Player playerDomain);
+    PlayerCreateResponseDTO toCreateResponseDTO(Player playerDomain);
 
-    List<PlayerResponseDTO> listToResponseDTO(List<Player> playerList);
+    AllPlayerResponseDTO toAllResponseDTO(Player playerDomain);
+
+    GetPlayerResponseDTO toGetResponseDTO(Player playerDomain);
+
+    List<GetPlayerResponseDTO> listToResponseDTO(List<Player> playerList);
 
 }
