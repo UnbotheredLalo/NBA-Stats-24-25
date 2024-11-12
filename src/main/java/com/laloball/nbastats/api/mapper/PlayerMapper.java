@@ -22,10 +22,8 @@ public interface PlayerMapper {
 
     PlayerCreateResponseDTO toCreateResponseDTO(Player playerDomain);
 
-    AllPlayerResponseDTO toAllResponseDTO(Player playerDomain);
-
     GetPlayerResponseDTO toGetResponseDTO(Player playerDomain);
 
-    List<GetPlayerResponseDTO> listToResponseDTO(List<Player> playerList);
+    List<AllPlayerResponseDTO> listToResponseDTO(List<Player> playerList);
 
 }

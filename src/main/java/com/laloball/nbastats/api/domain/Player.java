@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class Player {
 
-    private Team team;
     private static long idCounter = 1;
     private long id;
     private final String name;
@@ -30,14 +29,13 @@ public class Player {
     private int freeThrowsPercentage;
 
 
-    public Player(String name, int number, String country, String position, Team team,
+    public Player(String name, int number, String country, String position,
                         int numberOfPick, int numberOfSeasons) {
         this.id = generateID();
         this.name = name;
         this.number = number;
         this.country = country;
         this.position = position;
-        this.team = team;
         this.numberOfPick = numberOfPick;
         this.numberOfSeasons = numberOfSeasons;
     }
@@ -61,7 +59,6 @@ public class Player {
         return "Name: " + name + "\n" +
                 "Number: " + number + "\n" +
                 "Position: " + position + "\n" +
-                "Team: " + team + "\n" +
                 "Drafted No. " + numberOfPick + "\n" +
                 "Seasons since NBA Debut: " + numberOfSeasons;
     }

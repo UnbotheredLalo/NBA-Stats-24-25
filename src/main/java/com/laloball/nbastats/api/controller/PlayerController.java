@@ -31,27 +31,30 @@ public class PlayerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GetPlayerResponseDTO> getPlayerById(@PathVariable long id) {
-        GetPlayerResponseDTO playerResponseDTO = playerService.getPlayerById(id);
-        if (playerResponseDTO != null) {
-            return ResponseEntity.ok(playerResponseDTO);
+        GetPlayerResponseDTO playerResponseDTO = PlayerMapper.INSTANCE.toGetResponseDTO(
+                playerService.getPlayerById(id)
+        );
 
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(playerResponseDTO);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<AllPlayerResponseDTO>> getAllPlayers() {
-        List<AllPlayerResponseDTO> playersResponseDTO = playerService.getAllPlayers();
+        List<AllPlayerResponseDTO> playersResponseDTO = PlayerMapper.INSTANCE.listToResponseDTO(
+                playerService.getAll()
+        );
+
         return ResponseEntity.ok(playersResponseDTO);
     }
 
     @PostMapping
     public ResponseEntity<PlayerCreateResponseDTO> createNewPlayer(@RequestBody PlayerRequestDTO playerRequestDTO) {
         Player playerDomain = PlayerMapper.INSTANCE.toDomain(playerRequestDTO);
-        //todo: Agregar aquí un metodo create que valide el input del usuario
-        // previo a la creación y que arroje excepciones
+
+        playerDomain = playerService.createPlayer(playerDomain);
+
         PlayerCreateResponseDTO newPlayerResponseDTO = PlayerMapper.INSTANCE.toCreateResponseDTO(playerDomain);
+
         return ResponseEntity.status(CREATED).body(newPlayerResponseDTO);
     }
 
