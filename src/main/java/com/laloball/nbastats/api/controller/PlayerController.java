@@ -1,12 +1,13 @@
 package com.laloball.nbastats.api.controller;
 
 import com.laloball.nbastats.api.domain.Player;
-import com.laloball.nbastats.api.dto.request.PlayerRequestDTO;
+import com.laloball.nbastats.api.dto.request.PlayerCreateRequestDTO;
 import com.laloball.nbastats.api.dto.response.AllPlayerResponseDTO;
 import com.laloball.nbastats.api.dto.response.GetPlayerResponseDTO;
 import com.laloball.nbastats.api.dto.response.PlayerCreateResponseDTO;
 import com.laloball.nbastats.api.mapper.PlayerMapper;
 import com.laloball.nbastats.api.service.PlayerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +49,9 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<PlayerCreateResponseDTO> createNewPlayer(@RequestBody PlayerRequestDTO playerRequestDTO) {
-        Player playerDomain = PlayerMapper.INSTANCE.toDomain(playerRequestDTO);
+    public ResponseEntity<PlayerCreateResponseDTO> createNewPlayer(
+            @Valid @RequestBody PlayerCreateRequestDTO playerCreateRequestDTO) {
+        Player playerDomain = PlayerMapper.INSTANCE.toPlayer(playerCreateRequestDTO);
 
         playerDomain = playerService.createPlayer(playerDomain);
 
@@ -59,29 +61,10 @@ public class PlayerController {
     }
 
 
-    //todo: agregar metodos PATCH, PUT, Y DELETE
-
-
     }
 
 
     /*
-    @GetMapping("/all")
-    public ResponseEntity<List<Player>> getAllPlayers() {
-        List<PlayerRequestDTO> playersService = PlayerService.getAllPlayers();
-       List<PlayerResponseDTO> players = List.of(PlayerMapper.toResponseDTO(playersService));
-        return players.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.BodyBuilder;
-    }
-
-    @PostMapping
-    public ResponseEntity<PlayerResponseDTO> addPlayer(@RequestBody PlayerRequestDTO playerRequestDTO) {
-    //todo esta linea del metodo me esta dando muchisimos porblemas relacionados a entornos estaticos
-            Player  playerCreated = PlayerService.createPlayer(playerRequestDTO);
-
-            final PlayerResponseDTO playerResponseDTO = PlayerMapper.toResponseDTO(playerCreated);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(playerResponseDTO);
-    }
 
     @PutMapping("/player/{id}")
     public ResponseEntity<Player> updatePlayer(

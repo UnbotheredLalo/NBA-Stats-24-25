@@ -2,7 +2,7 @@ package com.laloball.nbastats.api.mapper;
 
 
 import com.laloball.nbastats.api.domain.Player;
-import com.laloball.nbastats.api.dto.request.PlayerRequestDTO;
+import com.laloball.nbastats.api.dto.request.PlayerCreateRequestDTO;
 import com.laloball.nbastats.api.dto.response.AllPlayerResponseDTO;
 import com.laloball.nbastats.api.dto.response.GetPlayerResponseDTO;
 import com.laloball.nbastats.api.dto.response.PlayerCreateResponseDTO;
@@ -18,7 +18,7 @@ public interface PlayerMapper {
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
     @Mapping(target = "id", ignore = true)
-    Player toDomain(PlayerRequestDTO playerRequestDTO);
+    Player toPlayer(PlayerCreateRequestDTO playerRequestDTO);
 
     PlayerCreateResponseDTO toCreateResponseDTO(Player playerDomain);
 

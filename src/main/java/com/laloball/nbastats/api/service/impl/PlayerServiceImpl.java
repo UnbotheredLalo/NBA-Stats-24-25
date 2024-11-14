@@ -72,7 +72,8 @@ public class PlayerServiceImpl implements PlayerService {
                 player.getNumber(),
                 player.getCountry(),
                 player.getPosition(),
-                player.getNumberOfPick()
+                player.getNumberOfPick(),
+                1
         );
         playersDB.add(newPlayer);
 
