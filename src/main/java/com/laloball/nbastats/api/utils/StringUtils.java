@@ -1,4 +1,4 @@
-package utils;
+package com.laloball.nbastats.api.utils;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;
