@@ -3,6 +3,7 @@ package com.laloball.nbastats.api.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 @AllArgsConstructor
@@ -10,16 +11,16 @@ import lombok.Data;
 public class Player {
     private final String name;
     private final String country;
-    private final String position;
     private final int numberOfPick;
+
+    @Setter
+    private BasketballPosition position;
     private int number;
 
     @Builder.Default
     private int numberOfSeasons = 1;
     private static long idCounter = 1;
     private long id;
-
-
 
 //    private double pointsPG;
 //    private double minutesPG;
@@ -36,7 +37,7 @@ public class Player {
 //    private int threePointsPercentage;
 //    private int freeThrowsPercentage;
 
-    public Player(String name, int number, String country, String position,
+    public Player(String name, int number, String country, BasketballPosition position,
                         int numberOfPick, int numberOfSeasons) {
         this.id = generateID();
         this.name = name;
@@ -59,6 +60,7 @@ public class Player {
                 "Drafted No. " + numberOfPick + "\n" +
                 "Seasons since NBA Debut: " + numberOfSeasons;
     }
+
 
 //    public String percentageFG (Player Player) {
 //        if (Player.getTotalFieldGoalsTried() == 0)
