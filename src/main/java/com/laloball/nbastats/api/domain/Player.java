@@ -8,12 +8,11 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @Builder
+@Setter
 public class Player {
     private final String name;
     private final String country;
     private final int numberOfPick;
-
-    @Setter
     private BasketballPosition position;
     private int number;
 
@@ -21,21 +20,6 @@ public class Player {
     private int numberOfSeasons = 1;
     private static long idCounter = 1;
     private long id;
-
-//    private double pointsPG;
-//    private double minutesPG;
-//    private double reboundsPG;
-//    private double assistsPG;
-//    private double stealsPG;
-//    private double blocksPG;
-//    private int totalFieldGoalsTried;
-//    private int totalThreePointers;
-//    private int totalFreeThrows;
-//    private int successfulFieldGoals;
-//    private int successfulThreePointers;
-//    private int successfulFreeThrows;
-//    private int threePointsPercentage;
-//    private int freeThrowsPercentage;
 
     public Player(String name, int number, String country, BasketballPosition position,
                         int numberOfPick, int numberOfSeasons) {
@@ -61,28 +45,4 @@ public class Player {
                 "Seasons since NBA Debut: " + numberOfSeasons;
     }
 
-
-//    public String percentageFG (Player Player) {
-//        if (Player.getTotalFieldGoalsTried() == 0)
-//            return "0.00%";
-//        double fieldGoalsPercentage =
-//                (double) Player.getSuccessfulFieldGoals() / Player.getTotalFieldGoalsTried() * 100;
-//        return String.format("%.2f%%", fieldGoalsPercentage);
-//    }
-//
-//    public String percentageFT (Player Player) {
-//        if (Player.getTotalFreeThrows() == 0)
-//            return "0.00%";
-//        double freeThrowsPercentage =
-//                (double) Player.getSuccessfulFreeThrows() / Player.getTotalFreeThrows() * 100;
-//        return String.format("%.2f%%", freeThrowsPercentage);
-//    }
-//
-//    public String percentage3P (Player Player) {
-//        if (Player.getTotalThreePointers() == 0)
-//            return "0.00%";
-//        double threePointersPercentage =
-//                (double) Player.getSuccessfulThreePointers() / Player.getTotalThreePointers() * 100;
-//        return String.format("%.2f%%", threePointersPercentage);
-//    }
 }

@@ -11,7 +11,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.laloball.nbastats.api.domain.BasketballPosition.*;
+import static com.laloball.nbastats.api.domain.BasketballPosition.CENTER;
+import static com.laloball.nbastats.api.domain.BasketballPosition.POINT_GUARD;
+import static com.laloball.nbastats.api.domain.BasketballPosition.POWER_FORWARD;
+import static com.laloball.nbastats.api.domain.BasketballPosition.SHOOTING_GUARD;
+import static com.laloball.nbastats.api.domain.BasketballPosition.SMALL_FORWARD;
 
 @Service
 @AllArgsConstructor
